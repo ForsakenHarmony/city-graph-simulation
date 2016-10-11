@@ -1,16 +1,31 @@
 buildscript {
+    ext.kotlin_version = '1.0.4'
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
     }
     dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
+apply plugin: "idea"
+apply plugin: "kotlin"
+
 allprojects {
     apply plugin: "idea"
+    apply plugin: "kotlin"
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    configurations {
+        required
+        compile.extendsFrom(required)
+    }
 
     version = '1.0'
     ext {
@@ -31,8 +46,7 @@ allprojects {
 }
 
 project(":desktop") {
-    apply plugin: "java"
-
+    apply plugin: "kotlin"
 
     dependencies {
         compile project(":core")
@@ -40,12 +54,13 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        required "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     }
 }
 
 project(":core") {
-    apply plugin: "java"
-
+    apply plugin: "kotlin"
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -56,5 +71,7 @@ project(":core") {
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.3"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.3"
         compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        required "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     }
 }

@@ -7,6 +7,9 @@ import harmony.citygraphsimulation.CityGraph
 object DesktopLauncher {
   @JvmStatic fun main(arg: Array<String>) {
     val config = LwjglApplicationConfiguration()
+    config.width = 1280
+    config.height = 720
+    config.resizable = false
     LwjglApplication(CityGraph(), config)
   }
 }

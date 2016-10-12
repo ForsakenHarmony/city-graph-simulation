@@ -27,7 +27,7 @@ allprojects {
         compile.extendsFrom(required)
     }
 
-    version = '1.0'
+    version = '0.0.1'
     ext {
         appName = "city-graph-simulation"
         gdxVersion = '1.9.4'
